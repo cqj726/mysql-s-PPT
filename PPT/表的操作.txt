@@ -1,0 +1,36 @@
+管理表：
+
+1、表
+改名：	RENAME TABLE `kc` TO `kc2`; 
+	ALTER TABLE `kc2` RENAME TO `kc`; 
+
+删除：	DROP TABLE 表名
+
+2、字段
+ALTER TABLE 表名
+
+删除：	DROP 字段
+	DROP FOREIGN KEY 外键约束名
+
+修改名：	CHANGE 老字段 新字段 CHAR(10)
+
+修改属性：MODIFY 字段 CHAR(30)
+
+添加字段：ADD 字段 CHAR(30)
+
+修改存储引擎：
+ENGINE =INNODB
+
+3、数据
+插入：	
+	所有字段：
+	INSERT INTO 表 VALUES						(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+	部分字段的插入多行数据：
+	INSERT INTO 表 (HOST,Db,USER) VALUES('a','b','c'),('a1','b1','c1'),('a2','b3','c3')
+	
+	将其他表的内容插入到本表
+	INSERT INTO 表1 SELECT * FROM 表1
+	CREATE TABLE 新表 SELECT * FROM 表1
+更新：	UPDATE db_copy SET HOST='vvvv' WHERE HOST='localhost1'
+
+删除：	DELETE FROM 表1 WHERE 条件
