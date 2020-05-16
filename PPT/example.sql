@@ -56,9 +56,6 @@ SELECT * FROM `TRIGGERS`;
 USE `xscj1`;
 SHOW TRIGGERS;
 
-################################ 查看会话变量
-SHOW VARIABLES LIKE 'default_storage_engine';
-
 ################################ 全局变量
 SHOW GLOBAL VARIABLES;
 
@@ -77,9 +74,11 @@ SET GLOBAL range_alloc_block_size = 8192;
 SET @@global.range_alloc_block_size = 4096;
 
 ################################ 会话变量
-SHOW VARIABLES;
 
+SHOW VARIABLES;
+SHOW VARIABLES LIKE 'default_storage_engine';
 SHOW VARIABLES LIKE 'autocommit';
+
 SELECT @@session.autocommit;
 
 SET SESSION autocommit =0;
