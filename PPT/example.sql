@@ -89,7 +89,7 @@ SELECT @@session.range_alloc_block_size;    ##最低4096，每次加1024
 
 SET SESSION range_alloc_block_size = 8192;
 
-################################ 用户变量
+################################ 用户变量，例9.4
 SET @user1='关系数据库', @user2='MySQL', @user3='MySQL';
 SET @user1='关系数据库', @user2='MySQL', @user3:='MySQL';
 
@@ -104,7 +104,15 @@ SELECT @user3;
 
 SELECT @user2:=@user3;
 
-################################ 局部变量
+
+################################ 用户变量，例9.5
+USE xscj1;
+SET @姓名 =(SELECT 姓名 FROM xsqk WHERE 学号='2016110101');
+
+SELECT 学号,姓名,性别,专业名,所在学院 FROM xsqk WHERE 姓名 = @姓名;
+
+
+################################ 局部变量，例9.6
 DELIMITER $$
 
 CREATE
@@ -233,6 +241,34 @@ CREATE
 DELIMITER ;
 
 CALL addsum1();
+
+################################ 关于iterate 和 leave的例子
+DELIMITER //
+
+CREATE PROCEDURE myProc (IN in_count INT)
+BEGIN
+    DECLARE COUNT INT DEFAULT 0;
+    DECLARE SUM INT DEFAULT 0;
+    
+    increment: LOOP
+    SET COUNT = COUNT + 1;
+    IF COUNT < 20 THEN ITERATE increment; END IF;
+    
+    SET SUM = SUM + COUNT;
+    
+    IF COUNT > in_count THEN LEAVE increment;
+    END IF;
+    END LOOP increment;
+
+    SELECT COUNT, SUM;
+END//
+
+DELIMITER ;
+
+CALL myproc(15);
+CALL myproc(20);
+CALL myproc(25);
+
 
 ################################ 例9.13
 DELIMITER $$
