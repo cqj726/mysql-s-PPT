@@ -1,4 +1,4 @@
-﻿-- 创建数据库XSCJ1
+-- 创建数据库XSCJ1
 CREATE DATABASE XSCJ1;
 
 -- 切换数据库XSCJ1为当前数据库
