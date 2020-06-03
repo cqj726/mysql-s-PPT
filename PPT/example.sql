@@ -352,14 +352,26 @@ BEGIN;
 INSERT INTO xsqk VALUES('2016110408','王天','男','1997-12-06','云计算','计算机学院','13585452548',NULL,NULL);
 ROLLBACK;
 
-################################ 事务隔离级别和锁 9.16，9.17
+################################ 事务隔离级别和锁
 
 SET GLOBAL TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
 SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
+SELECT @@tx_isolation;  （高版本mysql不可用）
 SELECT @@transaction_isolation;
+
+################################  9.16
+
+### 客户端1：
+BEGIN;
+SELECT * FROM xs_kc;
+UPDATE xs_kc SET 成绩 = 成绩 + 5 WHERE 学号='2016110101';
+
+### 客户端2：
+BEGIN;
+UPDATE xs_kc SET 成绩 = 成绩 * 0.9 WHERE 学号='2016110101';
 
 # 一个客户端开启事务1：
 BEGIN;
@@ -389,4 +401,16 @@ COMMIT;
 
 UPDATE xsqk SET 联系电话='13805126565' WHERE 学号='2016110104';
 
+################################ 9.17
+
 SELECT * FROM xs_kc WHERE 学号 IN('2016110101','2016110102') FOR UPDATE;
+
+################################ innodb监视器
+
+SHOW STATUS LIKE 'innodb_row_lock%';
+
+SET GLOBAL innodb_status_output=ON;
+SET GLOBAL innodb_status_output_locks=ON;
+
+SHOW ENGINE INNODB STATUS;
+
